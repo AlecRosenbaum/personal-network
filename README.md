@@ -41,7 +41,7 @@ First, I installed some common tools (mosh, neovim, docker, etc.) + cloned the r
 
 #### OpenVPN
 
-* follow the quick start here: https://hub.docker.com/r/kylemanna/openvpn
+* follow the quick start here: https://github.com/kylemanna/docker-openvpn/blob/master/docs/docker-compose.md
   - Once done, you shoulld have a CA + base config file + a client certificate
 * modify the dns configuration within the config file to use the pihole as the dns
 * open up the VPN port (1194 UDP)
