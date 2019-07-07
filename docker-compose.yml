@@ -1,0 +1,37 @@
+version: '3'
+services:
+  openvpn:
+    cap_add:
+     - NET_ADMIN
+    image: kylemanna/openvpn:latest
+    container_name: openvpn
+    ports:
+     - "1194:1194/udp"
+    restart: unless-stopped
+    volumes:
+     - ./openvpn-data/conf:/etc/openvpn
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:4.3.1-4
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      TZ: 'America/New_York'
+      DNS1: 1.1.1.1
+      # WEBPASSWORD: 'set a secure password here or it will be random'
+    # Volumes store your data between container upgrades
+    volumes:
+       - ./etc-pihole/:/etc/pihole/
+       - ./etc-dnsmasq.d/:/etc/dnsmasq.d/
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
